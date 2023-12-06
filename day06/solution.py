@@ -1,5 +1,14 @@
 import time as time
 
+def getRunsFromHold(time, hold):
+    runs = 0
+    if ((time + 1) % 2 == 0):
+        runs = (((time + 1) / 2) - hold) * 2
+    else:
+        runs = ((((time + 1) / 2) - hold) * 2)
+
+    return runs
+
 def multiplicationOfAllPerms(perms):
     result = 1
     for i in range(0, len(perms)):
@@ -13,43 +22,21 @@ def getCompetitionPerms(competitions):
         time = int(competition[0])
         distance = int(competition[1])
         for ms in range(0, time):
-            hold = ms
-            run = time - hold
-            result = run * hold
+            holdtime = ms
+            runtime = time - holdtime
+            result = runtime * holdtime
             if result > distance:
-                print("%d meets targed distance of: %d on run: %d" % (result, distance, hold))
-                if ((time + 1) % 2 == 0):
-                    print("%d + 1 is even" % (time))
-                    halfway = (time + 1) / 2
-                    print("%d is halfway" % (halfway))
-                    halfOfRun = halfway - hold
-                    print("%d is half of run" % (halfOfRun))
-                    runs = halfOfRun * 2
-                    count = runs
-                else:
-                    print("%d + 1 is odd" % (time))
-                    halfway = (time + 1) / 2
-                    print("%d is halfway" % (halfway))
-                    halfOfRun = halfway - hold
-                    print("%d is half of run" % (halfOfRun))
-                    runs = (halfOfRun * 2)
-                    count = runs
+                count = getRunsFromHold(time, holdtime)
                 perms.append(int(count))
                 break
-                
-        print("amount of successful runs this competition: %d" % int(count))
-    print(perms)
     return perms
 
 # return the data as a set of both sets [[time, distance], [time, distance], ...]
 def processFile(file):
     line = file.readline()
     times = line[line.find(':') + 1:].split()
-    print(times)
     line = file.readline()
     distances = line[line.find(':') + 1:].split()
-    print(distances)
-
     competitions = []
     for i in range(0, len(times)):
         competitions.append([times[i], distances[i]])
@@ -60,14 +47,9 @@ def processFile(file):
 def processFilePartTwo(file):
     line = file.readline()
     times = ''.join(line[line.find(':') + 1:].split())
-    print(times)
-
     line = file.readline()
     distances = ''.join(line[line.find(':') + 1:].split())
-    print(distances)
-
     competitions = []
-    
     competitions.append([times, distances])
 
     print(competitions)

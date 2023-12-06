@@ -1,2 +1,2 @@
 # AOC2023
-Doing advent of code in C#
+Doing advent of code in Python
